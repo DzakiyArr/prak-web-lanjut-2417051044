@@ -3,7 +3,7 @@
 @section('content')
     <div>
         <h1>Daftar Pengguna</h1>
-        <table>
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
