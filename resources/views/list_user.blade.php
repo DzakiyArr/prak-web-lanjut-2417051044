@@ -10,6 +10,7 @@
                     <th>Nama</th>
                     <th>NPM</th>
                     <th>Kelas</th>
+                    <th style="width: 150px;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,14 @@
                         <td>{{ $user->nama }}</td>
                         <td>{{ $user->nim }}</td>
                         <td>{{ $user->nama_kelas }}</td>
+                        <td>
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">Edit</a>
+                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">Hapus</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

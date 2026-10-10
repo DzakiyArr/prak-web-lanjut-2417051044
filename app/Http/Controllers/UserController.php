@@ -30,7 +30,7 @@ class UserController extends Controller
     {
         $this->userModel->create([
             'nama' => $request->input('nama'),
-            'nim' => $request->input('npm'),
+            'nim' => $request->input('nim'),
             'kelas_id' => $request->input('kelas_id'),
         ]);
         return redirect()->to('/user');
@@ -45,4 +45,41 @@ class UserController extends Controller
         ];
         return view('create_user', $data);
     }
+
+    
+    public function edit($id)
+    {
+        $user = UserModel::findOrFail($id);
+        $kelas = $this->kelasModel->getKelas();
+
+        return view('edit_user', ['title' => 'Edit User', 'user' => $user, 'kelas' => $kelas]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:50',
+            'kelas_id' => 'required',
+        ]);
+
+        $user = UserModel::findOrFail($id);
+
+        $user->update([
+            'nama' => $request->input('nama'),
+            'nim' => $request->input('nim'),
+            'kelas_id' => $request->input('kelas_id'),
+        ]);
+
+        return redirect()->to('/user')->with('success', 'Data user berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $user = UserModel::findOrFail($id);
+        $user->delete();
+
+        return redirect()->to('/user')->with('success', 'Data user berhasil dihapus.');
+    }
+
 }
